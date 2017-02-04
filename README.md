@@ -13,7 +13,8 @@ FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs
 - src/bin: this is place to store script
 - src/config/config: this is place for main config
 - src/config/datasource: this is place for database config
-- src/config/controller: this is place for controller (which should not have business logic)
+- src/config/sequelize: this is place for sequelize database config
+- src/controller: this is place for controller (which should not have business logic)
 - src/model: this is where your model should be at
 - src/module: plugin module, possibly change to node_modules
 - src/orm: list of orm that you want to include
