@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "newLine": "LF",
+        "lib": ["es6"],
+        "module": "commonjs",
+        "removeComments": true,
+        "sourceMap": false,
+        "types" : [ "node" ],
+        "outDir": "app"
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ],
+    "compileOnSave": false
+}
