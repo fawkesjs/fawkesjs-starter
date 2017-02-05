@@ -67,6 +67,14 @@ export const routes: IRoutes = [{
   method: 'post',
   parameters: [
     {
+      "name": "age",
+      "in": "formData",
+      "description": "age, not used, just to showcase parameter checking",
+      "type": "integer",
+      "maximum": 10,
+      "minimum": 100
+    },
+    {
       "name": "email",
       "in": "formData",
       "description": "Email of account",
