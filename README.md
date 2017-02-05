@@ -9,22 +9,16 @@ FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs
 - npm run start
 - navigate to localhost:3000/swagger to test the api
 
-## Main Structure
-- src/bin: this is place to store script
-- src/config/config: this is place for main config
-- src/config/datasource: this is place for database config
-- src/config/sequelize: this is place for sequelize database config
-- src/controller: this is place for controller (which should not have business logic)
-- src/model: this is where your model should be at
-- src/module: plugin module, possibly change to node_modules
-- src/orm: list of orm that you want to include
-- src/route: list of route, only accept folder name + index.ts, route/index.ts is the base url.
-- migrations: sequelize migration file
-- public: your html file, can also be jade file, whatever engine you want
+## Build in structure in this project
+- Express
+- Sequelize
+- Typescript
+- Swagger: use `fawkesjs -s ./swagger/swagger.json` to generate swagger document
+- Express Rest Param Validation: integration with swagger document generation
+- Acl (inside `fawkesjs-starter/src/module`)
+- AccessToken (inside `fawkesjs-starter/src/module`)
 
-## Naming Convention
-- all folder singular form, to avoid headache in naming (if I use plural form, should src/bin be src/bins ?)
-
-## Community
-- FawkesJs https://gitter.im/fawkesjs
-- Anything personal go to https://gitter.im/nghenglim
+## Resources
+- [Documentation](https://github.com/fawkesjs/fawkesjs/tree/master/doc)
+- [Gitter/Community](https://gitter.im/fawkesjs)
+- [Contact Main Author](https://gitter.im/nghenglim)

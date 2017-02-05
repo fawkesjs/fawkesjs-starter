@@ -82,7 +82,7 @@ export const routes: IRoutes = [{
     }
   ]
 }]
-export let swagger: {
+export const swagger = {
   "responses": {
     "200": {
       "description": "success return",
