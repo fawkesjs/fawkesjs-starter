@@ -59,7 +59,21 @@ export const routes: IRoutes = [{
       "required": true,
       "type": "email",
       "maxLength": 128
-    }
+    },
+    {
+      "name": "type",
+      "in": "formData",
+      "description": "showcase, perhaps female or male type",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "name": "subscribe",
+      "in": "formData",
+      "description": "showcase",
+      "type": "boolean"
+    },
   ]
 }, {
   remote: '/account/login',
