@@ -6,11 +6,10 @@
         "module": "commonjs",
         "removeComments": true,
         "sourceMap": false,
-        "types" : [ "node" ],
-        "outDir": "app"
+        "types" : [ "node" ]
     },
     "include": [
-        "src/**/*"
+        "app/**/*"
     ],
     "exclude": [
         "node_modules",

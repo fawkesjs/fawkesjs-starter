@@ -113,21 +113,21 @@ export const routes: IRoutes = [{
   method: 'post',
   parameters: [
     {
-      "name": "email",
+      "name": "password",
       "in": "formData",
       "required": true,
       "description": "should use body, using formData is for showcase",
       "type": "string",
-      "format": "email",
-      "maxLength": 128
+      "minLength": 6,
+      "maxLength": 36
     },
     {
-      "name": "password",
+      "name": "email",
       "in": "formData",
       "required": true,
       "type": "string",
-      "minLength": 6,
-      "maxLength": 36
+      "format": "email",
+      "maxLength": 128
     }
   ]
 }]
