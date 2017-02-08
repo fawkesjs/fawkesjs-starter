@@ -10,9 +10,6 @@
     "db:migrate": "sequelize --config ./app/config/sequelize.js db:migrate",
     "db:migrate:undo": "sequelize --config ./app/config/sequelize.js db:migrate:undo"
   },
-  "engines": {
-    "node": "7.5.0"
-  },
   "license": "MIT",
   "author": "nghenglim",
   "dependencies": {
