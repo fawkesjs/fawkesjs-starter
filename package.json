@@ -3,12 +3,15 @@
   "version": "0.2.1",
   "private": true,
   "scripts": {
-    "start": "npm run db:sync && ts-node app/index.ts",
+    "start": "ts-node app/bin/sync.ts && ts-node app/index.ts",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
     "roll": "ts-node app/bin/roll.ts",
     "db:sync": "ts-node app/bin/sync.ts",
     "db:migrate": "sequelize --config ./app/config/sequelize.js db:migrate",
     "db:migrate:undo": "sequelize --config ./app/config/sequelize.js db:migrate:undo"
+  },
+  "engines": {
+    "node": "7.5.0"
   },
   "license": "MIT",
   "author": "nghenglim",
