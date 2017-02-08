@@ -6,3 +6,4 @@ npm-debug.log
 *.cache
 typings
 app/**/*.js
+database.sqlite

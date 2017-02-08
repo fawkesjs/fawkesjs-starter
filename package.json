@@ -1,9 +1,9 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
-    "start": "ts-node app/index.ts",
+    "start": "npm run db:sync && ts-node app/index.ts",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
     "roll": "ts-node app/bin/roll.ts",
     "db:sync": "ts-node app/bin/sync.ts",

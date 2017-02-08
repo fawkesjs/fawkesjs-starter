@@ -39,7 +39,8 @@ export class AccountModel {
         return Promise.reject(AccountError.databaseError)
       })
   }
-  static createAsync(arg: IArgAccountRegister) {
+  static createAsync(arg: IArgAccountRegister, role?: string) {
+    role = role || Role.USER
     return bcrypt.hash(arg.password, 10)
       .then(hash => {
         let theArg = {
@@ -50,7 +51,7 @@ export class AccountModel {
           RoleAccounts: [
             {
               id: uuidV4(),
-              roleId: Role.USER
+              roleId: role
             }
           ]
         }
