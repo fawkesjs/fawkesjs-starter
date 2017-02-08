@@ -3,7 +3,7 @@ FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs
 
 ## Usage
 - git clone https://github.com/fawkesjs/fawkesjs-starter
-- npm install && npm run start
+- npm install && npm run start (if you want to maintain the db, use node .)
 - navigate to localhost:5000/swagger to test the api
 - Config is at app/config, see [Documentation](https://github.com/fawkesjs/fawkesjs/tree/master/doc) for more info
 
