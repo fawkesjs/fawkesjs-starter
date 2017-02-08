@@ -1,7 +1,7 @@
 {
   "name": "fawkesjs-starter",
   "version": "0.2.1",
-  "private": true,
+  "main": "index.js",
   "scripts": {
     "start": "ts-node app/bin/sync.ts && ts-node app/index.ts",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
