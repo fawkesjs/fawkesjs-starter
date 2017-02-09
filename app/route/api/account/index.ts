@@ -36,9 +36,9 @@ export const routes: IRoutes = [{
       "name": "body",
       "in": "body",
       "required": true,
-      "type": 'object',
       "schema": {
         "title": "AccountLogin",
+        "type": "object",
         "required":[
             "email",
             "password",
