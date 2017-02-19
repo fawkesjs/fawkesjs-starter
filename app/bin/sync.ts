@@ -1,7 +1,8 @@
-import { Orm } from "fawkesjs"
+import { Orm, Fawkes } from "fawkesjs"
 import { Role } from "../ref"
 import { AccountModel } from "../model"
 const roles = [{ id: Role.ADMIN, name: 'admin' }, { id: Role.USER, name: 'user' }]
+Fawkes.initClass()
 Orm.models.Account.sync({ force: true })
   .then(data => {
     return Orm.models.AccessToken.sync({ force: true })
