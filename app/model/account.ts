@@ -6,7 +6,7 @@ import { AccessTokenModel } from "../model";
 import { Role } from "../ref";
 import { AccountError } from "../error";
 export class AccountModel {
-  static findByIdAsync(accountId: string) {
+  static async findByIdAsync(accountId: string) {
     let sequence = Promise.resolve()
     return sequence.then(() => {
       return Orm.models.Account.findOne({
@@ -17,7 +17,7 @@ export class AccountModel {
       })
     })
   }
-  static loginAsync(arg: IArgAccountLogin) {
+  static async loginAsync(arg: IArgAccountLogin) {
     let sequence = Promise.resolve()
     let a = sequence.then(() => {
       return Orm.models.Account.findOne({ where: { email: arg.email } })
@@ -39,7 +39,7 @@ export class AccountModel {
         return Promise.reject(AccountError.databaseError)
       })
   }
-  static createAsync(arg: IArgAccountRegister, role?: string) {
+  static async createAsync(arg: IArgAccountRegister, role?: string) {
     role = role || Role.USER
     return bcrypt.hash(arg.password, 10)
       .then(hash => {
@@ -58,10 +58,10 @@ export class AccountModel {
         return Orm.sequelize.transaction().then(t => {
           return Orm.models.Account.create(theArg, { include: [Orm.models.RoleAccount], transaction: t })
             .then(data => {
-              return Helper.transactionCommit(t, data)
+              return Helper.transactionCommitAsync(t, data)
             })
             .catch(err => {
-              return Helper.transactionRollback(t, err)
+              return Helper.transactionRollbackAsync(t, err)
             })
         })
       })
