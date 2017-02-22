@@ -4,7 +4,7 @@ import { ICtrl, Config, Orm, Helper } from "fawkesjs";
 import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister } from "../interface";
 import { AccountError } from "../error";
 export class AccountController {
-  static findMe(ctrl: ICtrl): void {
+  static async findMe(ctrl: ICtrl) {
     AccountModel.findByIdAsync(ctrl.accountId)
       .then(data => {
         ctrl.res.json(data);
@@ -13,7 +13,7 @@ export class AccountController {
         Helper.errCb(err, ctrl.res);
       })
   }
-  static findById(ctrl: ICtrl): void {
+  static async findById(ctrl: ICtrl) {
     let arg: IArgAccountFindById = ctrl.arg
     AccountModel.findByIdAsync(arg.accountId)
       .then(data => {
@@ -23,7 +23,7 @@ export class AccountController {
         Helper.errCb(err, ctrl.res);
       })
   }
-  static login(ctrl: ICtrl): void {
+  static async login(ctrl: ICtrl) {
     let arg: IArgAccountLogin = ctrl.arg
     AccountModel.loginAsync(arg)
       .then(data => {
@@ -33,7 +33,7 @@ export class AccountController {
         Helper.errCb(err, ctrl.res);
       })
   }
-  static register(ctrl: ICtrl): void {
+  static async register(ctrl: ICtrl) {
     let arg: IArgAccountRegister = ctrl.arg
     AccountModel.createAsync(arg)
       .then(data => {
