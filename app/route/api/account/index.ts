@@ -124,13 +124,3 @@ export const routes: IRoutes = [{
     }
   ]
 }]
-export const swagger = {
-  "responses": {
-    "200": {
-      "description": "success return",
-      "schema": {
-        "type": "object"
-      }
-    }
-  }
-}
