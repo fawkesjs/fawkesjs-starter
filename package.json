@@ -1,6 +1,6 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "index.js",
   "scripts": {
     "start": "ts-node app/bin/sync.ts && ts-node app/index.ts",
@@ -10,15 +10,19 @@
     "db:migrate": "sequelize --config ./app/config/sequelize.js db:migrate",
     "db:migrate:undo": "sequelize --config ./app/config/sequelize.js db:migrate:undo"
   },
-  "engines" : { "node" : ">=7.6.0" },
+  "engines": {
+    "node": ">=7.6.0"
+  },
   "license": "MIT",
   "author": "nghenglim",
   "dependencies": {
+    "@types/node": "^7.0.5",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
+    "ejs": "^2.5.6",
     "express": "~4.13.1",
-    "fawkesjs": "~0.2.3",
+    "fawkesjs": "~0.2.7",
     "glob": "^5.0.14",
     "i18n": "^0.8.3",
     "lodash": "^3.10.1",
@@ -32,7 +36,6 @@
     "ts-node": "^2.0.0",
     "typescript": "^2.1.5",
     "uuid": "^3.0.1",
-    "validator": "^6.2.1",
-    "@types/node": "^7.0.5"
+    "validator": "^6.2.1"
   }
 }

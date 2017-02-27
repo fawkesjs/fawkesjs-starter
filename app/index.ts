@@ -9,6 +9,8 @@ import { Config, Fawkes } from "fawkesjs";
 const app = Fawkes.app();
 app.use(express.static(path.join(__dirname, "../public")));
 app.use('/swagger', express.static(path.join(__dirname, "../swagger")));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'view'));
 Fawkes.activateRoute(app);
 const server: http.Server = http.createServer(app);
 server.listen(Config.port);
