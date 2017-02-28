@@ -3,7 +3,7 @@ export class Template {
   static GUEST = 'template/guest'
   static page(page) {
     return {
-      title: 'Site Title',
+      title: 'FawkesJs Starter',
       page: '../view/' + page
     }
   }
