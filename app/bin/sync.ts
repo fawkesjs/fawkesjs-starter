@@ -34,7 +34,7 @@ Orm.models.Account.sync({ force: true })
           { id: role.id, name: role.name }
         )
       }
-      let adminAccount = AccountModel.createAsync({
+      let adminAccount = await AccountModel.createAsync({
           name: "admin",
           email: "admin@localhost.com",
           password: "admin"
