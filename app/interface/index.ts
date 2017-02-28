@@ -4,7 +4,8 @@ export interface IArgAccountFindById {
 }
 export interface IArgAccountLogin {
   email: string,
-  password: string
+  password: string,
+  cookie: boolean
 }
 export interface IArgAccountRegister {
   name: string,

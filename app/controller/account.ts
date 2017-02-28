@@ -26,7 +26,15 @@ export class AccountController {
   static async login(ctrl: ICtrl) {
     let arg: IArgAccountLogin = ctrl.arg
     AccountModel.loginAsync(arg)
-      .then(data => {
+      .then((data:any) => {
+        if (arg.cookie === true) {
+          let options = {
+            maxAge: 1000 * 60 * 60 * 24 * 365, // would expire after 365 days
+            httpOnly: false, // The cookie only accessible by the web server?
+            signed: true // Indicates if the cookie should be signed
+          }
+          ctrl.res.cookie('authorization', data.id, options)
+        }
         ctrl.res.json(data);
       })
       .catch(err => {

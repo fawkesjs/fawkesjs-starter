@@ -121,6 +121,13 @@ export const routes: IRoutes = [{
       "type": "string",
       "minLength": 3,
       "maxLength": 36
+    },
+    {
+      "name": "cookie",
+      "in": "formData",
+      "required": true,
+      "type": "boolean",
+      "default": false
     }
   ]
 }]
