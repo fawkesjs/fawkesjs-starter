@@ -11,19 +11,6 @@ Orm.models.Account.sync({ force: true })
     return Orm.models.Role.sync({ force: true })
   })
   .then(data => {
-    Orm.sequelize.transaction(t => {
-      let ps = []
-      for (let i = 0; i < roles.length; i++) {
-        let role = roles[i]
-        let p = Orm.models.Role.create(
-          { id: role.id, name: role.name }
-        )
-        ps.push()
-      }
-      return Promise.all(ps)
-    })
-  })
-  .then(data => {
     return Orm.models.RoleAcl.sync({ force: true })
   })
   .then(data => {
@@ -33,15 +20,27 @@ Orm.models.Account.sync({ force: true })
     return Orm.models.AccessToken.sync({ force: true })
   })
   .then(data => {
-    return AccountModel.createAsync({
-      name: "admin",
-      email: "admin@localhost.com",
-      password: "admin"
-    }, Role.ADMIN)
-  })
-  .then(data => {
-    return Promise.resolve(data)
+    return dataInitialize()
   })
   .catch(err => {
-    console.log(err)
+    throw err
   })
+
+  async function dataInitialize() {
+    try {
+      for (let i = 0; i < roles.length; i++) {
+        let role = roles[i]
+        let p = await Orm.models.Role.create(
+          { id: role.id, name: role.name }
+        )
+      }
+      let adminAccount = AccountModel.createAsync({
+          name: "admin",
+          email: "admin@localhost.com",
+          password: "admin"
+        }, Role.ADMIN)
+      return Promise.resolve({})
+    } catch(err) {
+      return Promise.reject(err)
+    }
+  }
