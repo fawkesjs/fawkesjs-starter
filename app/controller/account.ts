@@ -30,7 +30,7 @@ export class AccountController {
         if (arg.cookie === true) {
           let options = {
             maxAge: 1000 * 60 * 60 * 24 * 365, // would expire after 365 days
-            httpOnly: false, // The cookie only accessible by the web server?
+            httpOnly: true, // The cookie only accessible by the web server?
             signed: true // Indicates if the cookie should be signed
           }
           ctrl.res.cookie('authorization', data.id, options)
