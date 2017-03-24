@@ -38,7 +38,7 @@ Orm.models.Account.sync({ force: true })
           name: "admin",
           email: "admin@localhost.com",
           password: "admin"
-        }, Role.ADMIN)
+        }, [Role.ADMIN, Role.USER])
       return Promise.resolve({})
     } catch(err) {
       return Promise.reject(err)

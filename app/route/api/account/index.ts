@@ -6,11 +6,11 @@ export const routes: IRoutes = [{
   func: AccountController.findMe,
   acl: {
     target: 'authenticated',
-    role: [Role.ADMIN, Role.USER]
+    role: [Role.USER]
   },
   method: 'get'
 }, {
-  remote: '/{accountId}',
+  remote: '/findById/{accountId}',
   func: AccountController.findById,
   acl: {
     target: 'authenticated',
@@ -130,4 +130,9 @@ export const routes: IRoutes = [{
       "default": false
     }
   ]
+}, {
+  remote: '/logout',
+  func: AccountController.logout,
+  method: 'post',
+  parameters: []
 }]

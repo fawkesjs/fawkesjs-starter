@@ -6,7 +6,7 @@ import { Role } from "../ref";
 export const config: IRoutesConfig = {
   swagger: false,
   preCtrls: [
-    AccessTokenMiddleware.verifyCookieAsync,
+    AccessTokenMiddleware.verifyAsync,
     AclMiddleware.verifyAsync
   ]
 }
