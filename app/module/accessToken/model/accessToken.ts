@@ -17,4 +17,23 @@ export class AccessTokenModel {
       })
     })
   }
+  static async deleteIdsAsync(accessTokenIds:Array<string>) {
+    if (accessTokenIds.length === 0) {
+      return Promise.resolve({})
+    }
+    let sequence = Promise.resolve()
+    return sequence.then(() => {
+      return Orm.models.AccessToken.destroy({
+        where: {
+          id: {
+            $in: accessTokenIds
+          }
+        }
+      }).then(data => {
+        return Promise.resolve(data)
+      }).catch(err => {
+        return Promise.reject(err)
+      })
+    })
+  }
 }

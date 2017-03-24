@@ -39,8 +39,7 @@ export class AccountModel {
         return Promise.reject(AccountError.databaseError)
       })
   }
-  static async createAsync(arg: IArgAccountRegister, role?: string) {
-    role = role || Role.USER
+  static async createAsync(arg: IArgAccountRegister, roles: Array<string>) {
     return bcrypt.hash(arg.password, 10)
       .then(hash => {
         let theArg = {
@@ -48,12 +47,13 @@ export class AccountModel {
           email: arg.email,
           password: hash,
           id: uuidV4(),
-          RoleAccounts: [
-            {
-              id: uuidV4(),
-              roleId: role
-            }
-          ]
+          RoleAccounts: []
+        }
+        for (let i=0;i<roles.length;i++) {
+          theArg.RoleAccounts.push({
+            id: uuidV4(),
+            roleId: roles[i]
+          })
         }
         return Orm.sequelize.transaction().then(t => {
           return Orm.models.Account.create(theArg, { include: [Orm.models.RoleAccount], transaction: t })
