@@ -36,7 +36,6 @@ export const routes: IRoutes = [{
       "name": "body",
       "required": true,
       "schema": {
-
         "properties": {
           "address": {
             "items": {
@@ -83,7 +82,7 @@ export const routes: IRoutes = [{
           },
           "type": {
             "description": "showcase, perhaps female or male type",
-            "enums": [1, 2],
+            "enum": [1, 2],
             "maximum": 2,
             "minimum": 1,
             "type": "integer",
@@ -95,7 +94,7 @@ export const routes: IRoutes = [{
             "name",
             "type",
         ],
-        "title": "AccountLogin",
+        "title": "AccountRegister",
         "type": "object",
       },
     },
