@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "CommonJS",
+    "newLine": "LF",
     "lib": ["es6"],
-    "outDir": "dist",
-    "declaration": true,
+    "module": "commonjs",
+    "removeComments": true,
+    "sourceMap": false,
     "types" : [ "node" ]
   },
   "include": [
-      "src/**/*"
+      "app/**/*"
   ],
   "exclude": [
       "node_modules",
