@@ -33,9 +33,11 @@
     "sequelize-cli": "^2.5.1",
     "sqlite3": "^3.1.8",
     "ts-node": "^2.0.0",
-    "tslint": "^5.1.0",
     "typescript": "^2.1.5",
     "uuid": "^3.0.1",
     "validator": "^6.2.1"
+  },
+  "devDependencies": {
+    "tslint": "^5.1.0"
   }
 }
