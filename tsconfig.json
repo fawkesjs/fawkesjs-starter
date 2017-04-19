@@ -1,19 +1,18 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "newLine": "LF",
-        "lib": ["es6"],
-        "module": "commonjs",
-        "removeComments": true,
-        "sourceMap": false,
-        "types" : [ "node" ]
-    },
-    "include": [
-        "app/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
-    ],
-    "compileOnSave": true
+  "compilerOptions": {
+    "target": "es5",
+    "module": "CommonJS",
+    "lib": ["es6"],
+    "outDir": "dist",
+    "declaration": true,
+    "types" : [ "node" ]
+  },
+  "include": [
+      "src/**/*"
+  ],
+  "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+  ],
+  "compileOnSave": false
 }
