@@ -6,6 +6,6 @@ module.exports = {
     Note: If you login with cookie true, you do not need to set the access_token \
     in swagger Authorize button",
     title: "FawkesJs Starter",
-    version: "0.3.0",
+    version: "0.4.0",
   },
 };
