@@ -1,44 +1,47 @@
-import { AccountAttribute, AccountOrmInstance } from "../interface"
 import * as Sequelize from "sequelize";
 
 export class AccountOrm {
-  static definition(sequel: Sequelize.Instance) {
-    let Account = sequel.define<AccountOrmInstance, AccountAttribute>("Account", {
-      "id": {
-        "type": Sequelize.UUID,
+  public static definition(sequel: Sequelize.Instance) {
+    const Account = sequel.define("Account", {
+      "createdAt": {
         "allowNull": false,
-        "primaryKey": true
-      },
-      "name": {
-        "type": Sequelize.STRING(128),
-        "allowNull": false
+        "field": "created_at",
+        "type": Sequelize.DATE,
       },
       "email": {
-        "type": Sequelize.STRING(128),
         "allowNull": false,
+        "type": Sequelize.STRING(128),
         "unique": true,
         "validate": {
-          "isEmail": true
-        }
+          "isEmail": true,
+        },
+      },
+      "id": {
+        "allowNull": false,
+        "defaultValue": Sequelize.UUIDV4,
+        "primaryKey": true,
+        "type": Sequelize.UUID,
+        "validate": {
+          "isUUID": 4,
+        },
+      },
+      "name": {
+        "allowNull": false,
+        "type": Sequelize.STRING(128),
       },
       "password": {
+        "allowNull": false,
         "type": Sequelize.STRING(128),
-        "allowNull": false
-      },
-      "createdAt": {
-        type: Sequelize.DATE,
-        allowNull: false,
-        field: 'created_at'
       },
       "updatedAt": {
-        type: Sequelize.DATE,
-        field: 'updated_at'
-      }
+        "field": "updated_at",
+        "type": Sequelize.DATE,
+      },
     },
       {
         "tableName": "account",
-        "timestamps": true
+        "timestamps": true,
       });
-    return Account
+    return Account;
   }
 }

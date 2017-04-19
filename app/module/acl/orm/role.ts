@@ -1,31 +1,35 @@
 import * as Sequelize from "sequelize";
 
 export class RoleOrm {
-  static definition(sequel: Sequelize.Instance) {
-    let Role = sequel.define("Role", {
-      "id": {
-        "type": Sequelize.UUID,
+  public static definition(sequel: Sequelize.Instance) {
+    const Role = sequel.define("Role", {
+      "createdAt": {
         "allowNull": false,
-        "primaryKey": true
+        "field": "created_at",
+        "type": Sequelize.DATE,
+      },
+      "id": {
+        "allowNull": false,
+        "defaultValue": Sequelize.UUIDV4,
+        "primaryKey": true,
+        "type": Sequelize.UUID,
+        "validate": {
+          "isUUID": 4,
+        },
       },
       "name": {
+        "allowNull": false,
         "type": Sequelize.STRING(128),
-        "allowNull": false
-      },
-      "createdAt": {
-        type: Sequelize.DATE,
-        allowNull: false,
-        field: 'created_at'
       },
       "updatedAt": {
-        type: Sequelize.DATE,
-        field: 'updated_at'
-      }
+        "field": "updated_at",
+        "type": Sequelize.DATE,
+      },
     },
       {
         "tableName": "role",
-        "timestamps": true
+        "timestamps": true,
       });
-    return Role
+    return Role;
   }
 }

@@ -1,46 +1,40 @@
-import { Orm, Fawkes } from "fawkesjs"
-import { Role } from "../ref"
-import { AccountModel } from "../model"
-const roles = [{ id: Role.ADMIN, name: 'admin' }, { id: Role.USER, name: 'user' }]
-Fawkes.initClass()
-Orm.models.Account.sync({ force: true })
-  .then(data => {
-    return Orm.models.AccessToken.sync({ force: true })
-  })
-  .then(data => {
-    return Orm.models.Role.sync({ force: true })
-  })
-  .then(data => {
-    return Orm.models.RoleAcl.sync({ force: true })
-  })
-  .then(data => {
-    return Orm.models.RoleAccount.sync({ force: true })
-  })
-  .then(data => {
-    return Orm.models.AccessToken.sync({ force: true })
-  })
-  .then(data => {
-    return dataInitialize()
-  })
-  .catch(err => {
-    throw err
-  })
+import { Fawkes, Orm } from "fawkesjs";
+import { AccountModel } from "../model";
+import { Role } from "../ref";
 
-  async function dataInitialize() {
-    try {
-      for (let i = 0; i < roles.length; i++) {
-        let role = roles[i]
-        let p = await Orm.models.Role.create(
-          { id: role.id, name: role.name }
-        )
-      }
-      let adminAccount = await AccountModel.createAsync({
-          name: "admin",
-          email: "admin@localhost.com",
-          password: "admin"
-        }, [Role.ADMIN, Role.USER])
-      return Promise.resolve({})
-    } catch(err) {
-      return Promise.reject(err)
+const roles = [{ id: Role.ADMIN, name: "admin" }, { id: Role.USER, name: "user" }];
+Fawkes.initClass();
+modelSyncAsync()
+  .then((data) => {
+    return dataInitialize();
+  })
+  .catch((err) => {
+    throw err;
+  });
+
+async function modelSyncAsync() {
+  for (const key in Orm.models) {
+    if (Orm.models.hasOwnProperty(key)) {
+      await Orm.models[key].sync({ force: true });
     }
   }
+  return Promise.resolve({});
+}
+
+async function dataInitialize() {
+  try {
+    for (const role of roles) {
+      await Orm.models.Role.create(
+        { id: role.id, name: role.name },
+      );
+    }
+    const adminAccount = await AccountModel.createAsync({
+        email: "admin@localhost.com",
+        name: "admin",
+        password: "admin",
+      }, [Role.ADMIN, Role.USER]);
+    return Promise.resolve({});
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}

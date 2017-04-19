@@ -1,10 +1,10 @@
-import { MainController } from "../../controller";
 import { IRoutes } from "fawkesjs";
+import { MainController } from "../../controller";
 export const routes: IRoutes = [{
-  remote: '/',
-  func: MainController.api,
   acl: {
-    target: 'guest'
+    target: "guest",
   },
-  method: 'get'
-}]
+  func: MainController.api,
+  method: "get",
+  remote: "/",
+}];
