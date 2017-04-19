@@ -1,76 +1,77 @@
 import * as express from "express";
-import { AccountModel, AccessTokenModel } from "../model";
-import { ICtrl, Config, Orm, Helper } from "fawkesjs";
-import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister } from "../interface";
+import { Config, Helper, ICtrl, Orm } from "fawkesjs";
 import { AccountError } from "../error";
+import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister } from "../interface";
+import { AccessTokenModel, AccountModel } from "../model";
 import { Role } from "../ref";
+
 export class AccountController {
-  static async findMe(ctrl: ICtrl) {
+  public static async findMe(ctrl: ICtrl) {
     AccountModel.findByIdAsync(ctrl.accountId)
-      .then(data => {
+      .then((data) => {
         ctrl.res.json(data);
       })
-      .catch(err => {
+      .catch((err) => {
         Helper.errCb(err, ctrl.res);
-      })
+      });
   }
-  static async findById(ctrl: ICtrl) {
-    let arg: IArgAccountFindById = ctrl.arg
+  public static async findById(ctrl: ICtrl) {
+    const arg: IArgAccountFindById = ctrl.arg;
     AccountModel.findByIdAsync(arg.accountId)
-      .then(data => {
+      .then((data) => {
         ctrl.res.json(data);
       })
-      .catch(err => {
+      .catch((err) => {
         Helper.errCb(err, ctrl.res);
-      })
+      });
   }
-  static async login(ctrl: ICtrl) {
-    let arg: IArgAccountLogin = ctrl.arg
+  public static async login(ctrl: ICtrl) {
+    const arg: IArgAccountLogin = ctrl.arg;
     AccountModel.loginAsync(arg)
-      .then((data:any) => {
+      .then((data: any) => {
         if (arg.cookie === true) {
-          let options = {
-            maxAge: 1000 * 60 * 60 * 24 * 365, // would expire after 365 days
+          const options = {
             httpOnly: true, // The cookie only accessible by the web server?
-            signed: true // Indicates if the cookie should be signed
-          }
-          ctrl.res.cookie('authorization', data.id, options)
+            maxAge: 1000 * 60 * 60 * 24 * 365, // would expire after 365 days
+            signed: true, // Indicates if the cookie should be signed
+          };
+          ctrl.res.cookie("authorization", data.id, options);
           ctrl.res.json({});
         } else {
           ctrl.res.json(data);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         Helper.errCb(err, ctrl.res);
-      })
+      });
   }
-  static async register(ctrl: ICtrl) {
-    let arg: IArgAccountRegister = ctrl.arg
+  public static async register(ctrl: ICtrl) {
+    const arg: IArgAccountRegister = ctrl.arg;
     AccountModel.createAsync(arg, [Role.USER])
-      .then(data => {
+      .then((data) => {
         ctrl.res.json({});
       })
-      .catch(err => {
+      .catch((err) => {
         Helper.errCb(err, ctrl.res);
-      })
+      });
   }
-  static async logout(ctrl: ICtrl) {
-    let accessTokenIds = []
-    let cookieAuthorization = ctrl.req.signedCookies ? ctrl.req.signedCookies.authorization : undefined
-    if (typeof cookieAuthorization === 'string') {
-      accessTokenIds.push(cookieAuthorization)
+  public static async logout(ctrl: ICtrl) {
+    const accessTokenIds = [];
+    const cookieAuthorization = ctrl.req.signedCookies ? ctrl.req.signedCookies.authorization : undefined;
+    if (typeof cookieAuthorization === "string") {
+      accessTokenIds.push(cookieAuthorization);
     }
-    if (typeof ctrl.req.headers.authorization === 'string') {
-      accessTokenIds.push(ctrl.req.headers.authorization)
+    if (typeof ctrl.req.headers.authorization === "string") {
+      accessTokenIds.push(ctrl.req.headers.authorization);
     }
     try {
-      await AccessTokenModel.deleteIdsAsync(accessTokenIds)
+      await AccessTokenModel.deleteIdsAsync(accessTokenIds);
       if (cookieAuthorization) {
-        ctrl.res.clearCookie("authorization")
+        ctrl.res.clearCookie("authorization");
       }
-    } catch(err) {
-      console.log(err)
-    }
-    ctrl.res.json({})
+    } catch (err) {
+      // tslint:disable-next-line no-console
+      console.log(err);    }
+    ctrl.res.json({});
   }
 }

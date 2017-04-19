@@ -1,38 +1,38 @@
 import * as Sequelize from "sequelize";
 
 export class AccessTokenOrm {
-  static definition(sequel: Sequelize.Instance) {
-    let AccessToken = sequel.define("AccessToken", {
-      "id": {
-        "type": Sequelize.STRING(128),
-        "allowNull": false,
-        "primaryKey": true
-      },
+  public static definition(sequel: Sequelize.Instance) {
+    const AccessToken = sequel.define("AccessToken", {
       "accountId": {
-        "type": Sequelize.UUID,
         "allowNull": false,
-        "field": "account_id"
+        "field": "account_id",
+        "type": Sequelize.UUID,
       },
       "createdAt": {
-        type: Sequelize.DATE,
-        allowNull: false,
-        field: 'created_at'
+        "allowNull": false,
+        "field": "created_at",
+        "type": Sequelize.DATE,
+      },
+      "id": {
+        "allowNull": false,
+        "primaryKey": true,
+        "type": Sequelize.STRING(128),
       },
       "updatedAt": {
-        type: Sequelize.DATE,
-        field: 'updated_at'
-      }
+        "field": "updated_at",
+        "type": Sequelize.DATE,
+      },
     },
       {
+        "classMethods": {
+          associate: (models) => {
+            models.Account.hasMany(models.AccessToken, { foreignKey: "accountId" });
+            models.AccessToken.belongsTo(models.Account, { foreignKey: "accountId" });
+          },
+        },
         "tableName": "access_token",
         "timestamps": true,
-        "classMethods": {
-          associate: function(models) {
-            models.Account.hasMany(models.AccessToken, { foreignKey: 'accountId' })
-            models.AccessToken.belongsTo(models.Account, { foreignKey: 'accountId' })
-          }
-        }
       });
-    return AccessToken
+    return AccessToken;
   }
 }

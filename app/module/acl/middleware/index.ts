@@ -1,47 +1,47 @@
-import { Orm, IPreCtrl, IError, ErrorCode } from 'fawkesjs'
-let authError: IError = {
-  statusCode: 401,
-  errorCode: ErrorCode.ACL_ERROR
-}
+import { ErrorCode, IError, IPreCtrl, Orm } from "fawkesjs";
+const authError: IError = {
+  "errorCode": ErrorCode.ACL_ERROR,
+  "statusCode": 401,
+};
 export class AclMiddleware {
-  static verifyAsync(preCtrl: IPreCtrl) {
-    let sequence = Promise.resolve()
-    let acl = preCtrl.route.acl
+  public static verifyAsync(preCtrl: IPreCtrl) {
+    let sequence = Promise.resolve();
+    const acl = preCtrl.route.acl;
     if (acl && acl.target) {
       sequence = sequence.then(() => {
-        if (acl.target === 'guest' && typeof preCtrl.accountId !== 'undefined') {
-          return Promise.reject(authError)
-        } else if (acl.target === 'authenticated' && typeof preCtrl.accountId === 'undefined') {
-          return Promise.reject(authError)
+        if (acl.target === "guest" && typeof preCtrl.accountId !== "undefined") {
+          return Promise.reject(authError);
+        } else if (acl.target === "authenticated" && typeof preCtrl.accountId === "undefined") {
+          return Promise.reject(authError);
         }
-        return Promise.resolve()
-      })
+        return Promise.resolve();
+      });
     }
     // this can change to redis or memcached for better performance
     if (acl && acl.role && acl.role.length) {
       sequence = sequence.then(() => {
-        if (typeof preCtrl.accountId === 'undefined') {
-          return Promise.reject(authError)
+        if (typeof preCtrl.accountId === "undefined") {
+          return Promise.reject(authError);
         }
         return Orm.models.RoleAccount.findOne({
+          attributes: ["id"],
           where: {
+            accountId: preCtrl.accountId,
             roleId: {
-              $in: acl.role
+              $in: acl.role,
             },
-            accountId: preCtrl.accountId
           },
-          attributes: ['id']
         })
           .then((data) => {
             if (!data) {
-              return Promise.reject(authError)
+              return Promise.reject(authError);
             }
-            return Promise.resolve()
-          })
-      })
+            return Promise.resolve();
+          });
+      });
     }
     return sequence.then(() => {
-      return preCtrl
-    })
+      return preCtrl;
+    });
   }
 }

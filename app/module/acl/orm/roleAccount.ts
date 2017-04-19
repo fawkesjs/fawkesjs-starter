@@ -1,45 +1,55 @@
 import * as Sequelize from "sequelize";
 
 export class RoleAccountOrm {
-  static definition(sequel: Sequelize.Instance) {
-    let RoleAccount = sequel.define("RoleAccount", {
-      "id": {
-        "type": Sequelize.UUID,
-        "allowNull": false,
-        "primaryKey": true
-      },
-      "roleId": {
-        "type": Sequelize.UUID,
-        "allowNull": false,
-        "field": "role_id"
-      },
+  public static definition(sequel: Sequelize.Instance) {
+    const RoleAccount = sequel.define("RoleAccount", {
       "accountId": {
-        "type": Sequelize.UUID,
         "allowNull": false,
-        "field": "account_id"
+        "field": "account_id",
+        "type": Sequelize.UUID,
+        "validate": {
+          "isUUID": 4,
+        },
       },
       "createdAt": {
-        type: Sequelize.DATE,
-        allowNull: false,
-        field: 'created_at'
+        "allowNull": false,
+        "field": "created_at",
+        "type": Sequelize.DATE,
+      },
+      "id": {
+        "allowNull": false,
+        "defaultValue": Sequelize.UUIDV4,
+        "primaryKey": true,
+        "type": Sequelize.UUID,
+        "validate": {
+          "isUUID": 4,
+        },
+      },
+      "roleId": {
+        "allowNull": false,
+        "field": "role_id",
+        "type": Sequelize.UUID,
+        "validate": {
+          "isUUID": 4,
+        },
       },
       "updatedAt": {
-        type: Sequelize.DATE,
-        field: 'updated_at'
-      }
+        "field": "updated_at",
+        "type": Sequelize.DATE,
+      },
     },
       {
+        "classMethods": {
+          associate: (models) => {
+            models.Role.hasMany(models.RoleAccount, { foreignKey: "roleId" });
+            models.RoleAccount.belongsTo(models.Role, { foreignKey: "roleId" });
+            models.Account.hasMany(models.RoleAccount, { foreignKey: "accountId" });
+            models.RoleAccount.belongsTo(models.Account, { foreignKey: "accountId" });
+          },
+        },
         "tableName": "role_account",
         "timestamps": true,
-        "classMethods": {
-          associate: function(models) {
-            models.Role.hasMany(models.RoleAccount, { foreignKey: 'roleId' })
-            models.RoleAccount.belongsTo(models.Role, { foreignKey: 'roleId' })
-            models.Account.hasMany(models.RoleAccount, { foreignKey: 'accountId' })
-            models.RoleAccount.belongsTo(models.Account, { foreignKey: 'accountId' })
-          }
-        }
       });
-    return RoleAccount
+    return RoleAccount;
   }
 }

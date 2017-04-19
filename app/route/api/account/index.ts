@@ -1,138 +1,139 @@
-import { AccountController } from "../../../controller";
 import { IRoutes } from "fawkesjs";
+import { AccountController } from "../../../controller";
 import { Role } from "../../../ref";
 export const routes: IRoutes = [{
-  remote: '/me',
+  acl: {
+    role: [Role.USER],
+    target: "authenticated",
+  },
   func: AccountController.findMe,
-  acl: {
-    target: 'authenticated',
-    role: [Role.USER]
-  },
-  method: 'get'
+  method: "get",
+  remote: "/me",
 }, {
-  remote: '/findById/{accountId}',
-  func: AccountController.findById,
   acl: {
-    target: 'authenticated',
-    role: [Role.ADMIN]
+    role: [Role.ADMIN],
+    target: "authenticated",
   },
-  method: 'get',
+  func: AccountController.findById,
+  method: "get",
   parameters: [
     {
-      "name": "accountId",
-      "in": "path",
       "description": "ID of account",
+      "format": "uuid",
+      "in": "path",
+      "name": "accountId",
       "required": true,
       "type": "string",
-      "format": "uuid"
-    }
-  ]
+    },
+  ],
+  remote: "/findById/{accountId}",
 }, {
-  remote: '/register',
   func: AccountController.register,
-  method: 'post',
+  method: "post",
   parameters: [
     {
-      "name": "body",
       "in": "body",
+      "name": "body",
       "required": true,
       "schema": {
-        "title": "AccountLogin",
-        "type": "object",
-        "required":[
-            "email",
-            "password",
-            "name",
-            "type"
-        ],
-        "properties":{
-          "email":{
-            "type":"string",
-            "format": "email",
-            "maxLength": 128
+
+        "properties": {
+          "address": {
+            "items": {
+              "properties": {
+                "address1": {
+                  "maxLength": 128,
+                  "type": "string",
+                },
+                "address2": {
+                  "maxLength": 128,
+                  "type": "string",
+                },
+                "postcode": {
+                  "maxLength": 128,
+                  "type": "string",
+                },
+              },
+              "required": [
+                "address1",
+                "postcode",
+              ],
+              "title": "AccountAddress",
+            },
+            "type": "array",
           },
-          "password":{
-            "type":"string",
-            "minLength": 6,
-            "maxLength": 36
+          "email": {
+            "format": "email",
+            "maxLength": 128,
+            "type": "string",
           },
           "name": {
+            "maxLength": 128,
             "type": "string",
-            "maxLength": 128
+          },
+          "password": {
+            "maxLength": 36,
+            "minLength": 6,
+            "type": "string",
+          },
+          "subscribe": {
+            "default": false,
+            "description": "showcase",
+            "type": "boolean",
           },
           "type": {
             "description": "showcase, perhaps female or male type",
-            "type": "integer",
-            "minimum": 1,
+            "enums": [1, 2],
             "maximum": 2,
-            "default": 1
+            "minimum": 1,
+            "type": "integer",
           },
-          "subscribe": {
-            "description": "showcase",
-            "type": "boolean",
-            "default": false
-          },
-          "address": {
-            "type": "array",
-            "items": {
-              "title": "AccountAddress",
-              "required": [
-                "address1",
-                "postcode"
-              ],
-              "properties": {
-                "address1": {
-                  "type": "string",
-                  "maxLength": 128
-                },
-                "address2": {
-                  "type": "string",
-                  "maxLength": 128
-                },
-                "postcode": {
-                  "type": "string",
-                  "maxLength": 128
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+        },
+        "required": [
+            "email",
+            "password",
+            "name",
+            "type",
+        ],
+        "title": "AccountLogin",
+        "type": "object",
+      },
+    },
+  ],
+  remote: "/register",
 }, {
-  remote: '/login',
   func: AccountController.login,
-  method: 'post',
+  method: "post",
   parameters: [
     {
-      "name": "email",
-      "in": "formData",
-      "required": true,
       "description": "should use body, using formData is for showcase",
-      "type": "string",
       "format": "email",
-      "maxLength": 128
-    },
-    {
-      "name": "password",
       "in": "formData",
+      "maxLength": 128,
+      "name": "email",
       "required": true,
       "type": "string",
-      "minLength": 3,
-      "maxLength": 36
     },
     {
-      "name": "cookie",
       "in": "formData",
+      "maxLength": 36,
+      "minLength": 3,
+      "name": "password",
+      "required": true,
+      "type": "string",
+    },
+    {
+      "default": false,
+      "in": "formData",
+      "name": "cookie",
       "required": true,
       "type": "boolean",
-      "default": false
-    }
-  ]
+    },
+  ],
+  remote: "/login",
 }, {
-  remote: '/logout',
   func: AccountController.logout,
-  method: 'post',
-  parameters: []
-}]
+  method: "post",
+  parameters: [],
+  remote: "/logout",
+}];

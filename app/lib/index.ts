@@ -1,10 +1,10 @@
 export class Template {
-  static MAIN = 'template/main'
-  static GUEST = 'template/guest'
-  static page(page) {
+  public static MAIN = "template/main";
+  public static GUEST = "template/guest";
+  public static page(page) {
     return {
-      title: 'FawkesJs Starter',
-      page: '../view/' + page
-    }
+      page: "../view/" + page,
+      title: "FawkesJs Starter",
+    };
   }
 }

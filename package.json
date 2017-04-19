@@ -1,14 +1,13 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "main": "index.js",
   "scripts": {
     "start": "ts-node app/bin/sync.ts && ts-node app/index.ts",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
     "roll": "ts-node app/bin/roll.ts",
-    "db:sync": "ts-node app/bin/sync.ts",
-    "db:migrate": "sequelize --config ./app/config/sequelize.js db:migrate",
-    "db:migrate:undo": "sequelize --config ./app/config/sequelize.js db:migrate:undo"
+    "lint": "tslint app/**/*.ts",
+    "db:sync": "ts-node app/bin/sync.ts"
   },
   "engines": {
     "node": ">=7.6.0"
@@ -34,6 +33,7 @@
     "sequelize-cli": "^2.5.1",
     "sqlite3": "^3.1.8",
     "ts-node": "^2.0.0",
+    "tslint": "^5.1.0",
     "typescript": "^2.1.5",
     "uuid": "^3.0.1",
     "validator": "^6.2.1"
