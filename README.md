@@ -8,16 +8,13 @@
 ```bash
 git clone https://github.com/fawkesjs/fawkesjs-starter
 cd fawkesjs-starter
-npm install && npm run start
+npm install && npm run start # swagger at http://localhost:5000/swagger
 ```
 
-### Generating Swagger
-```bash
-npm run swagger
-```
-
-### Restart App after Edit code
-- use `node .` or nodemon
+### Common Command
+- Generating Swagger: `npm run swagger`
+- Full Migrate DB: `npm run db:sync`
+- Restart App: `node .` or `nodemon ./index.js -e ts --watch app`
 
 ## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration
