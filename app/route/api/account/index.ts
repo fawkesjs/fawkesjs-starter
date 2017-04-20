@@ -1,7 +1,7 @@
-import { IRoutes } from "fawkesjs";
+import { IRoute } from "fawkesjs";
 import { AccountController } from "../../../controller";
 import { Role } from "../../../ref";
-export const routes: IRoutes = [{
+export const routes: IRoute[] = [{
   acl: {
     role: [Role.USER],
     target: "authenticated",

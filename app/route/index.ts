@@ -1,4 +1,4 @@
-import { IRoutes, IRoutesConfig } from "fawkesjs";
+import { IRoute, IRoutesConfig } from "fawkesjs";
 import { MainController } from "../controller";
 import { AccessTokenMiddleware } from "../module/accessToken/middleware";
 import { AclMiddleware } from "../module/acl/middleware";
@@ -10,7 +10,7 @@ export const config: IRoutesConfig = {
   ],
   swagger: false,
 };
-export const routes: IRoutes = [{
+export const routes: IRoute[] = [{
   func: MainController.index,
   method: "get",
   remote: "/",
