@@ -1,6 +1,6 @@
-import { IRoutes } from "fawkesjs";
+import { IRoute } from "fawkesjs";
 import { MainController } from "../../controller";
-export const routes: IRoutes = [{
+export const routes: IRoute[] = [{
   acl: {
     target: "guest",
   },

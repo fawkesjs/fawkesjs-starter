@@ -1,9 +1,9 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node app/bin/sync.ts && ts-node app/index.ts",
+    "start": "fawkesjs -s ./swagger/swagger.json && ts-node app/bin/sync.ts && ts-node app/index.ts",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
     "roll": "ts-node app/bin/roll.ts",
     "lint": "tslint app/**/*.ts",

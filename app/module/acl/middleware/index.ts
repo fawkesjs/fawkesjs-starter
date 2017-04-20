@@ -1,7 +1,7 @@
 import { ErrorCode, IError, IPreCtrl, Orm } from "fawkesjs";
 const authError: IError = {
-  "errorCode": ErrorCode.ACL_ERROR,
-  "statusCode": 401,
+  errorCode: ErrorCode.ACL_ERROR,
+  statusCode: 401,
 };
 export class AclMiddleware {
   public static verifyAsync(preCtrl: IPreCtrl) {
