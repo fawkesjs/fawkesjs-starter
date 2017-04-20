@@ -1,18 +1,26 @@
 ## FawkesJs-starter
-FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs
+> FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs.
+> Can be used to setup web front end + API.
+
+[![Chat on Gitter](https://badges.gitter.im/fawkesjs/fawkesjs.svg)](https://gitter.im/fawkesjs/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Usage
-- git clone https://github.com/fawkesjs/fawkesjs-starter
-- npm install && npm run start (if you want to maintain the db, use node .)
-- navigate to localhost:5000/swagger to test the api
-- Config is at app/config, see [Documentation](https://github.com/fawkesjs/fawkesjs/tree/master/doc) for more info
+```bash
+git clone https://github.com/fawkesjs/fawkesjs-starter
+cd fawkesjs-starter
+npm install && npm run start
+```
 
-## Testing Api
-- default with admin account "admin@localhost.com" password "admin"
-- login with /api/account/login will return access_token in object id
-- the access_token can be set above swagger Authorize button
+### Generating Swagger
+```bash
+npm run swagger
+```
+
+### Restart App after Edit code
+- use `node .` or nodemon
+
+## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration
-- GET /api/account/{accountId} can only access by ADMIN role, GET /api/account/me can only access after login
 - ErrorCode in error return: REST_PARAM_ERROR = 601, ACL_ERROR = 602, REST_PARAM_NOT_SUPPORTED = 604, EMAIL_LOGIN_ERROR = 10001, DB_ERROR = 10002
 
 ## Build in structure in this project
@@ -26,5 +34,3 @@ FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs
 
 ## Resources
 - [Documentation](https://github.com/fawkesjs/fawkesjs/tree/master/doc)
-- [Gitter/Community](https://gitter.im/fawkesjs)
-- [Contact Main Author](https://gitter.im/nghenglim)
