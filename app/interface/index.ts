@@ -12,3 +12,11 @@ export interface IArgAccountRegister {
   email: string;
   password: string;
 }
+export interface ICreateResult {
+  id: string;
+}
+export interface IAccessTokenCreateResult {
+  accountId: string;
+  expiryDate: string;
+  id: string;
+}

@@ -6,29 +6,23 @@ import { AccessTokenModel, AccountModel } from "../model";
 import { Role } from "../ref";
 
 export class AccountController {
-  public static async findMe(ctrl: ICtrl) {
-    AccountModel.findByIdAsync(ctrl.accountId)
+  public static async findMe(ctrl: ICtrl): Promise<any> {
+    return AccountModel.findByIdAsync(ctrl.accountId)
       .then((data) => {
-        ctrl.res.json(data);
-      })
-      .catch((err) => {
-        Helper.errCb(err, ctrl.res);
+        return ctrl.res.json(data);
       });
   }
-  public static async findById(ctrl: ICtrl) {
+  public static async findById(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountFindById = ctrl.arg;
-    AccountModel.findByIdAsync(arg.accountId)
+    return AccountModel.findByIdAsync(arg.accountId)
       .then((data) => {
-        ctrl.res.json(data);
-      })
-      .catch((err) => {
-        Helper.errCb(err, ctrl.res);
+        return ctrl.res.json(data);
       });
   }
-  public static async login(ctrl: ICtrl) {
+  public static async login(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountLogin = ctrl.arg;
-    AccountModel.loginAsync(arg)
-      .then((data: any) => {
+    return AccountModel.loginAsync(arg)
+      .then((data) => {
         if (arg.cookie === true) {
           const options = {
             httpOnly: true, // The cookie only accessible by the web server?
@@ -36,26 +30,20 @@ export class AccountController {
             signed: true, // Indicates if the cookie should be signed
           };
           ctrl.res.cookie("authorization", data.id, options);
-          ctrl.res.json({});
+          return ctrl.res.json({});
         } else {
-          ctrl.res.json(data);
+          return ctrl.res.json(data);
         }
-      })
-      .catch((err) => {
-        Helper.errCb(err, ctrl.res);
       });
   }
-  public static async register(ctrl: ICtrl) {
+  public static async register(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountRegister = ctrl.arg;
-    AccountModel.createAsync(arg, [Role.USER])
+    return AccountModel.createAsync(arg, [Role.USER])
       .then((data) => {
-        ctrl.res.json({});
-      })
-      .catch((err) => {
-        Helper.errCb(err, ctrl.res);
+        return ctrl.res.json({});
       });
   }
-  public static async logout(ctrl: ICtrl) {
+  public static async logout(ctrl: ICtrl): Promise<any> {
     const accessTokenIds = [];
     const cookieAuthorization = ctrl.req.signedCookies ? ctrl.req.signedCookies.authorization : undefined;
     if (typeof cookieAuthorization === "string") {
@@ -71,7 +59,9 @@ export class AccountController {
       }
     } catch (err) {
       // tslint:disable-next-line no-console
-      console.log(err);    }
+      console.log(err);
+    }
     ctrl.res.json({});
+    return Promise.resolve({});
   }
 }
