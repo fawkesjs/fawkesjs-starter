@@ -92,7 +92,6 @@ export const routes: IRoute[] = [{
             "email",
             "password",
             "name",
-            "type",
         ],
         title: "AccountRegister",
         type: "object",
