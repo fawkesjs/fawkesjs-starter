@@ -1,5 +1,5 @@
 import { IError } from "fawkesjs";
-import { MyErrorCode } from "../ref";
+import { MyErrorCode } from "../const";
 
 export class CommonError {
   public static resultEmptyError: IError = {
