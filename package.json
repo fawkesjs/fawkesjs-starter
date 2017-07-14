@@ -1,10 +1,10 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.5.5",
+  "version": "0.8.0",
   "main": "index.js",
   "scripts": {
     "start": "tsc && fawkesjs -s ./swagger/swagger.json && node app/bin/sync.js && node .",
-    "dev": "tsc && fawkesjs -s ./swagger/swagger.json && node app/bin/sync.js && nodemon ./index.js -e js --watch app",
+    "dev": "tsc && fawkesjs -s ./swagger/swagger.json && nodemon ./index.js -e js --watch app",
     "swagger": "fawkesjs -s ./swagger/swagger.json",
     "roll": "ts-node app/bin/roll.ts",
     "lint": "tslint app/**/*.ts",
@@ -23,7 +23,7 @@
     "cookie-parser": "^1.3.5",
     "ejs": "^2.5.6",
     "express": "~4.13.1",
-    "fawkesjs": "~0.5.5",
+    "fawkesjs": "~0.8.0",
     "glob": "^5.0.14",
     "i18n": "^0.8.3",
     "lodash": "^3.10.1",

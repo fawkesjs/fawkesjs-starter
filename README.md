@@ -9,7 +9,7 @@
 git clone https://github.com/fawkesjs/fawkesjs-starter
 cd fawkesjs-starter
 npm install
-npm run dev # swagger at http://localhost:5000/swagger
+npm run start # use npm run dev to not rebuilding the database
 ```
 
 open another console and run following command to have auto restart

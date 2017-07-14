@@ -1,0 +1,1 @@
+export { MyErrorCode } from "./myErrorCode";
