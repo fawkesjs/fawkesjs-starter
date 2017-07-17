@@ -1,6 +1,6 @@
 {
   "name": "fawkesjs-starter",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "index.js",
   "scripts": {
     "start": "tsc && fawkesjs -s ./swagger/swagger.json && node app/bin/sync.js && node .",
