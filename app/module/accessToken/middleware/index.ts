@@ -12,9 +12,8 @@ export class AccessTokenMiddleware {
       authorizationToken = authorizationHeaders[1];
     }
     const authorization = authorizationToken || cookieAuthorization;
-    // tslint:disable-next-line:no-console
-    console.log(cookieAuthorization);
-    if (typeof authorization === "string") {
+
+    if (authorization && typeof authorization === "string") {
       sequence = sequence.then(() => {
         return Orm.models.AccessToken.findOne({
           attributes: ["accountId"],
