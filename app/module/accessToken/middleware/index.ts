@@ -1,11 +1,17 @@
-import { IPreCtrl, Orm } from "fawkesjs";
+import { Helper, IPreCtrl, Orm } from "fawkesjs";
 import * as moment from "moment";
 
 export class AccessTokenMiddleware {
   public static verifyAsync(preCtrl: IPreCtrl) {
     let sequence = Promise.resolve();
     const cookieAuthorization = preCtrl.req.signedCookies ? preCtrl.req.signedCookies.authorization : undefined;
-    const authorization = preCtrl.req.headers.authorization || cookieAuthorization;
+    const authorizationHeader = Helper.objGet(preCtrl.req.headers, "authorization", "");
+    const authorizationHeaders = authorizationHeader.split(" ");
+    let authorizationToken = "";
+    if (authorizationHeaders.length === 2 && authorizationHeaders[0] === "Bearer") {
+      authorizationToken = authorizationHeaders[1];
+    }
+    const authorization = authorizationToken || cookieAuthorization;
     // tslint:disable-next-line:no-console
     console.log(cookieAuthorization);
     if (typeof authorization === "string") {
