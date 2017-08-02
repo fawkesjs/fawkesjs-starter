@@ -10,13 +10,14 @@ export interface IAccessTokenCreateResult {
 export interface IDestroyResult {
   affectedCount: number;
 }
+const orm = new Orm(new Config({singleton: true}), {singleton: true});
 export class AccessTokenModel {
   public static createAsync(accountId): Promise<IAccessTokenCreateResult> {
     const sequence = Promise.resolve();
     return sequence.then(() => {
       let token = uuidV4() + crypto.randomBytes(32).toString("hex");
       token = token.replace(/-/g, "").substring(0, 64);
-      return Orm.models.AccessToken.create({
+      return orm.models.AccessToken.create({
         accountId,
         expiryDate: moment().add(30, "days").format(),
         id: token,
@@ -39,7 +40,7 @@ export class AccessTokenModel {
     }
     const sequence = Promise.resolve();
     return sequence.then(() => {
-      return Orm.models.AccessToken.destroy({
+      return orm.models.AccessToken.destroy({
         where: {
           id: {
             $in: accessTokenIds,

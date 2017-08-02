@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt-as-promised";
-import { Helper, Orm } from "fawkesjs";
+import { Config, Helper, Orm } from "fawkesjs";
 import * as uuidV4 from "uuid/v4";
 import { AccountError, CommonError } from "../error";
 import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister, ICreateResult } from "../interface";
@@ -12,9 +12,10 @@ export interface IFindByIdAsyncResult {
   name: string;
   updatedAt: string;
 }
+const orm = new Orm(new Config({singleton: true}), {singleton: true});
 export class AccountModel {
   public static async findByIdAsync(accountId: string): Promise<IFindByIdAsyncResult> {
-    return Orm.models.Account.findOne({
+    return orm.models.Account.findOne({
       attributes: ["id", "email", "name", "createdAt", "updatedAt"],
       where: {
         id: accountId,
@@ -36,7 +37,7 @@ export class AccountModel {
   public static async loginAsync(arg: IArgAccountLogin): Promise<ICreateResult> {
     try {
       const sequence = Promise.resolve();
-      const account = await Orm.models.Account.findOne({
+      const account = await orm.models.Account.findOne({
         attributes: ["id", "password"],
         where: { email: arg.email },
       });
@@ -69,12 +70,12 @@ export class AccountModel {
       });
     }
 
-    const t = await Orm.sequelize.transaction();
+    const t = await orm.sequelize.transaction();
     try {
-      const accountData = await Orm.models.Account.create(
+      const accountData = await orm.models.Account.create(
         theArg,
         {
-          include: [Orm.models.RoleAccount],
+          include: [orm.models.RoleAccount],
           transaction: t,
         },
       );

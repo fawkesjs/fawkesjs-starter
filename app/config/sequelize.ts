@@ -4,11 +4,12 @@ import * as _ from "underscore";
 declare const System: any;
 const env = process.env.NODE_ENV || "development";
 const conf = {db: null};
-for (const o of Helper.globFiles(Config.outDir + Config.configDir + "/datasource" + Config.extension)) {
+const config = new Config();
+for (const o of Helper.globFiles(config.outDir + config.configDir + "/datasource" + config.extension)) {
   const tmp = System.import(path.resolve(o));
   _.extend(conf, tmp);
 }
-for (const o of Helper.globFiles(Config.outDir + Config.configDir + "/datasource." + env + Config.extension)) {
+for (const o of Helper.globFiles(config.outDir + config.configDir + "/datasource." + env + config.extension)) {
   const tmp = System.import(path.resolve(o));
   _.extend(conf, tmp);
 }

@@ -5,7 +5,7 @@ import { Config, Fawkes } from "fawkesjs";
 import * as http from "http";
 import * as path from "path";
 import * as serveStatic from "serve-static";
-
+const config = new Config({singleton: true});
 // Init the express application
 const app = Fawkes.app();
 app.use(cookieParser("theSecretCookieSecret"));
@@ -16,12 +16,12 @@ app.set("views", path.join(__dirname, "view"));
 app.use(serveStatic(__dirname + "/../public", { maxAge: 0}));
 Fawkes.activateRoute(app);
 const server: http.Server = http.createServer(app);
-server.listen(Config.port);
+server.listen(config.port);
 server.on("error", (e: Error) => {
   // tslint:disable-next-line no-console
   console.log("Error starting server" + e);
 });
 server.on("listening", () => {
   // tslint:disable-next-line no-console
-  console.log("Server started on port " + Config.port);
+  console.log("Server started on port " + config.port);
 });

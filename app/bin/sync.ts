@@ -1,9 +1,9 @@
-import { Fawkes, Orm } from "fawkesjs";
+import { Config, Fawkes, Orm } from "fawkesjs";
 import { AccountModel } from "../model";
 import { Role } from "../ref";
 
 const roles = [{ id: Role.ADMIN, name: "admin" }, { id: Role.USER, name: "user" }];
-Fawkes.initClass();
+const orm = new Orm(new Config());
 modelSyncAsync()
   .then((data) => {
     return dataInitialize();
@@ -13,9 +13,9 @@ modelSyncAsync()
   });
 
 async function modelSyncAsync() {
-  for (const key in Orm.models) {
-    if (Orm.models.hasOwnProperty(key)) {
-      await Orm.models[key].sync({ force: true });
+  for (const key in orm.models) {
+    if (orm.models.hasOwnProperty(key)) {
+      await orm.models[key].sync({ force: true });
     }
   }
   return Promise.resolve({});
@@ -24,7 +24,7 @@ async function modelSyncAsync() {
 async function dataInitialize() {
   try {
     for (const role of roles) {
-      await Orm.models.Role.create(
+      await orm.models.Role.create(
         { id: role.id, name: role.name },
       );
     }

@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Config, ICtrl, Orm } from "fawkesjs";
+import { ICtrl } from "fawkesjs";
 import { Template } from "../lib";
 
 export class MainController {

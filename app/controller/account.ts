@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Config, Helper, ICtrl, Orm } from "fawkesjs";
+import { ICtrl } from "fawkesjs";
 import { AccountError } from "../error";
 import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister } from "../interface";
 import { AccessTokenModel, AccountModel } from "../model";

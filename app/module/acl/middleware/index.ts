@@ -1,8 +1,9 @@
-import { ErrorCode, IError, IPreCtrl, Orm } from "fawkesjs";
+import { Config, ErrorCode, IError, IPreCtrl, Orm } from "fawkesjs";
 const authError: IError = {
   errorCode: ErrorCode.ACL_ERROR,
   statusCode: 401,
 };
+const orm = new Orm(new Config({singleton: true}), {singleton: true});
 export class AclMiddleware {
   public static verifyAsync(preCtrl: IPreCtrl) {
     let sequence = Promise.resolve();
@@ -23,7 +24,7 @@ export class AclMiddleware {
         if (typeof preCtrl.accountId === "undefined") {
           return Promise.reject(authError);
         }
-        return Orm.models.RoleAccount.findOne({
+        return orm.models.RoleAccount.findOne({
           attributes: ["id"],
           where: {
             accountId: preCtrl.accountId,
