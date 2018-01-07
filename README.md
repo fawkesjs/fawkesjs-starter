@@ -22,6 +22,9 @@ npm run tsc:w
 - Full Migrate DB: `npm run db:sync`
 - Restart App: `node .` or `nodemon ./index.js -e ts --watch app`
 
+## TODO
+- Remove the usage of most class with static function for better dependency injection
+
 ## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration
 - ErrorCode in error return: REST_PARAM_ERROR = 601, ACL_ERROR = 602, REST_PARAM_NOT_SUPPORTED = 604, EMAIL_LOGIN_ERROR = 10001, DB_ERROR = 10002
