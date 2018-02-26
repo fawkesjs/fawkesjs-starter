@@ -1,8 +1,15 @@
 import * as bcrypt from "bcrypt-as-promised";
-import { Helper, Orm } from "fawkesjs";
+import { Config, Helper } from "fawkesjs";
 import * as uuidV4 from "uuid/v4";
 import { AccountError, CommonError } from "../error";
-import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister, ICreateResult } from "../interface";
+import {
+  IArgAccountFindById,
+  IArgAccountLogin,
+  IArgAccountRegister,
+  ICreateResult,
+  IDI,
+} from "../interface";
+import { Orm } from "../lib";
 import { AccessTokenModel } from "../model";
 import { Role } from "../ref";
 export interface IFindByIdAsyncResult {
@@ -13,8 +20,12 @@ export interface IFindByIdAsyncResult {
   updatedAt: string;
 }
 export class AccountModel {
-  public static async findByIdAsync(accountId: string): Promise<IFindByIdAsyncResult> {
-    return Orm.models.Account.findOne({
+  private di;
+  constructor(di) {
+    this.di = di;
+  }
+  public async findByIdAsync(accountId: string): Promise<IFindByIdAsyncResult> {
+    return this.di.orm.models.Account.findOne({
       attributes: ["id", "email", "name", "createdAt", "updatedAt"],
       where: {
         id: accountId,
@@ -33,10 +44,10 @@ export class AccountModel {
       }
     });
   }
-  public static async loginAsync(arg: IArgAccountLogin): Promise<ICreateResult> {
+  public async loginAsync(arg: IArgAccountLogin): Promise<ICreateResult> {
     try {
       const sequence = Promise.resolve();
-      const account = await Orm.models.Account.findOne({
+      const account = await this.di.orm.models.Account.findOne({
         attributes: ["id", "password"],
         where: { email: arg.email },
       });
@@ -50,12 +61,13 @@ export class AccountModel {
       if (bcryptCompare === false) {
         return Promise.reject(AccountError.emailPasswordError);
       }
-      return AccessTokenModel.createAsync(account.id);
+      const accessTokenModel = new AccessTokenModel(this.di);
+      return accessTokenModel.createAsync(account.id);
     } catch (err) {
       return Promise.reject(err);
     }
   }
-  public static async createAsync(arg: IArgAccountRegister, roles: string[]): Promise<ICreateResult> {
+  public async createAsync(arg: IArgAccountRegister, roles: string[]): Promise<ICreateResult> {
     const hash = await bcrypt.hash(arg.password, 10);
     const theArg = {
       RoleAccounts: [],
@@ -68,22 +80,17 @@ export class AccountModel {
         roleId: role,
       });
     }
-
-    const t = await Orm.sequelize.transaction();
     try {
-      const accountData = await Orm.models.Account.create(
+      const accountData = await this.di.orm.models.Account.create(
         theArg,
         {
-          include: [Orm.models.RoleAccount],
-          transaction: t,
+          include: [this.di.orm.models.RoleAccount],
         },
       );
-      await t.commit();
       return Promise.resolve({
         id: accountData.id,
       });
     } catch (err) {
-      await t.rollback();
       return Promise.reject(err);
     }
   }

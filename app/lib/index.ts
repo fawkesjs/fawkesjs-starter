@@ -1,3 +1,4 @@
+export { Orm } from "./orm";
 export class Template {
   public static MAIN = "template/main";
   public static GUEST = "template/guest";

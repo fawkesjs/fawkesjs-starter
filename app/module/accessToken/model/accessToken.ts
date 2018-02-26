@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import { Config, Orm } from "fawkesjs";
+import { Config } from "fawkesjs";
 import * as moment from "moment";
 import * as uuidV4 from "uuid/v4";
 export interface IAccessTokenCreateResult {
@@ -11,12 +11,16 @@ export interface IDestroyResult {
   affectedCount: number;
 }
 export class AccessTokenModel {
-  public static createAsync(accountId): Promise<IAccessTokenCreateResult> {
+  private di;
+  constructor(di) {
+    this.di = di;
+  }
+  public createAsync(accountId): Promise<IAccessTokenCreateResult> {
     const sequence = Promise.resolve();
     return sequence.then(() => {
       let token = uuidV4() + crypto.randomBytes(32).toString("hex");
       token = token.replace(/-/g, "").substring(0, 64);
-      return Orm.models.AccessToken.create({
+      return this.di.orm.models.AccessToken.create({
         accountId,
         expiryDate: moment().add(30, "days").format(),
         id: token,
@@ -31,7 +35,7 @@ export class AccessTokenModel {
       });
     });
   }
-  public static async deleteIdsAsync(accessTokenIds: string[]): Promise<IDestroyResult> {
+  public async deleteIdsAsync(accessTokenIds: string[]): Promise<IDestroyResult> {
     if (accessTokenIds.length === 0) {
       return Promise.resolve({
         affectedCount: 0,
@@ -39,7 +43,7 @@ export class AccessTokenModel {
     }
     const sequence = Promise.resolve();
     return sequence.then(() => {
-      return Orm.models.AccessToken.destroy({
+      return this.di.orm.models.AccessToken.destroy({
         where: {
           id: {
             $in: accessTokenIds,

@@ -1,16 +1,20 @@
-import { IPreCtrl, Orm } from "fawkesjs";
+import { Config, Helper, IPreCtrl } from "fawkesjs";
 import * as moment from "moment";
-
 export class AccessTokenMiddleware {
   public static verifyAsync(preCtrl: IPreCtrl) {
     let sequence = Promise.resolve();
     const cookieAuthorization = preCtrl.req.signedCookies ? preCtrl.req.signedCookies.authorization : undefined;
-    const authorization = preCtrl.req.headers.authorization || cookieAuthorization;
-    // tslint:disable-next-line:no-console
-    console.log(cookieAuthorization);
-    if (typeof authorization === "string") {
+    const authorizationHeader = Helper.objGet(preCtrl.req.headers, "authorization", "");
+    const authorizationHeaders = authorizationHeader.split(" ");
+    let authorizationToken = "";
+    if (authorizationHeaders.length === 2 && authorizationHeaders[0] === "Bearer") {
+      authorizationToken = authorizationHeaders[1];
+    }
+    const authorization = authorizationToken || cookieAuthorization;
+
+    if (authorization && typeof authorization === "string") {
       sequence = sequence.then(() => {
-        return Orm.models.AccessToken.findOne({
+        return preCtrl.di.orm.models.AccessToken.findOne({
           attributes: ["accountId"],
           where: {
             expiryDate: {

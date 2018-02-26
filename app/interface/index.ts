@@ -20,3 +20,7 @@ export interface IAccessTokenCreateResult {
   expiryDate: string;
   id: string;
 }
+
+export interface IDI {
+  orm: any;
+}

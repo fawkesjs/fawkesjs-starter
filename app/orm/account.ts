@@ -1,4 +1,5 @@
 import * as Sequelize from "sequelize";
+import * as uuidV4 from "uuid/v4";
 
 export class AccountOrm {
   public static definition(sequel: Sequelize.Instance) {
@@ -18,12 +19,11 @@ export class AccountOrm {
       },
       id: {
         allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: () => {
+          return uuidV4(); // WARNING: use build in function from database instead for production
+        },
         primaryKey: true,
         type: Sequelize.UUID,
-        validate: {
-          isUUID: 4,
-        },
       },
       name: {
         allowNull: false,
