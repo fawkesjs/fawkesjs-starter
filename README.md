@@ -23,7 +23,8 @@ npm run watch
 - Restart App: `node .` or `nodemon ./index.js -e ts --watch app`
 
 ## TODO
-- Add default use knexjs for query ans sequelize for orm
+- Add default use knexjs for query and sequelize for orm
+- Error should be return as a class instance
 
 ## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration
