@@ -1,9 +1,14 @@
-import { Config, Fawkes, Orm } from "fawkesjs";
+import { Config, Fawkes } from "fawkesjs";
+import { IDI } from "../interface";
+import { Orm } from "../lib";
 import { AccountModel } from "../model";
 import { Role } from "../ref";
 
 const roles = [{ id: Role.ADMIN, name: "admin" }, { id: Role.USER, name: "user" }];
 const orm = new Orm(new Config());
+const di: IDI = {
+  orm: orm,
+};
 modelSyncAsync()
   .then((data) => {
     return dataInitialize();
@@ -28,7 +33,8 @@ async function dataInitialize() {
         { id: role.id, name: role.name },
       );
     }
-    const adminAccount = await AccountModel.createAsync({
+    let accountModel = new AccountModel(di);
+    const adminAccount = await accountModel.createAsync({
         email: "admin@localhost.com",
         name: "admin",
         password: "admin",

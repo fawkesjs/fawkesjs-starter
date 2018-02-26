@@ -1,6 +1,5 @@
-import { Config, Helper, IPreCtrl, Orm } from "fawkesjs";
+import { Config, Helper, IPreCtrl } from "fawkesjs";
 import * as moment from "moment";
-const orm = new Orm(new Config({singleton: true}), {singleton: true});
 export class AccessTokenMiddleware {
   public static verifyAsync(preCtrl: IPreCtrl) {
     let sequence = Promise.resolve();
@@ -15,7 +14,7 @@ export class AccessTokenMiddleware {
 
     if (authorization && typeof authorization === "string") {
       sequence = sequence.then(() => {
-        return orm.models.AccessToken.findOne({
+        return preCtrl.di.orm.models.AccessToken.findOne({
           attributes: ["accountId"],
           where: {
             expiryDate: {

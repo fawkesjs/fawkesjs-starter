@@ -14,7 +14,7 @@ npm run start # use npm run dev to not rebuilding the database
 
 open another console and run following command to have auto restart
 ```
-npm run tsc:w
+npm run watch
 ```
 
 ### Common Command
@@ -23,7 +23,7 @@ npm run tsc:w
 - Restart App: `node .` or `nodemon ./index.js -e ts --watch app`
 
 ## TODO
-- Remove the usage of most class with static function for better dependency injection
+- Add default use knexjs for query ans sequelize for orm
 
 ## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration

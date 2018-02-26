@@ -27,16 +27,14 @@ export class AccessTokenOrm {
         type: Sequelize.DATE,
       },
     },
-      {
-        classMethods: {
-          associate: (models) => {
-            models.Account.hasMany(models.AccessToken, { foreignKey: "accountId" });
-            models.AccessToken.belongsTo(models.Account, { foreignKey: "accountId" });
-          },
-        },
-        tableName: "access_token",
-        timestamps: true,
-      });
+    {
+      tableName: "access_token",
+      timestamps: true,
+    });
+    AccessToken.associate = (models) => {
+      models.Account.hasMany(models.AccessToken, { foreignKey: "accountId" });
+      models.AccessToken.belongsTo(models.Account, { foreignKey: "accountId" });
+    };
     return AccessToken;
   }
 }

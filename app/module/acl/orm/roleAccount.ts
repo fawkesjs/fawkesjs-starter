@@ -1,4 +1,5 @@
 import * as Sequelize from "sequelize";
+import * as uuidV4 from "uuid/v4";
 
 export class RoleAccountOrm {
   public static definition(sequel: Sequelize.Instance) {
@@ -18,12 +19,11 @@ export class RoleAccountOrm {
       },
       id: {
         allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: function() {
+          return uuidV4(); // WARNING: use build in function from database instead for production
+        },
         primaryKey: true,
         type: Sequelize.UUID,
-        validate: {
-          isUUID: 4,
-        },
       },
       roleId: {
         allowNull: false,
@@ -50,6 +50,12 @@ export class RoleAccountOrm {
         tableName: "role_account",
         timestamps: true,
       });
+    RoleAccount.associate = (models) => {
+      models.Role.hasMany(models.RoleAccount, { foreignKey: "roleId" });
+      models.RoleAccount.belongsTo(models.Role, { foreignKey: "roleId" });
+      models.Account.hasMany(models.RoleAccount, { foreignKey: "accountId" });
+      models.RoleAccount.belongsTo(models.Account, { foreignKey: "accountId" });
+    };
     return RoleAccount;
   }
 }

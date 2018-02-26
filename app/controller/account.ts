@@ -7,21 +7,24 @@ import { Role } from "../ref";
 
 export class AccountController {
   public static async findMe(ctrl: ICtrl): Promise<any> {
-    return AccountModel.findByIdAsync(ctrl.accountId)
+    const accountModel = new AccountModel(ctrl.di);
+    return accountModel.findByIdAsync(ctrl.accountId)
       .then((data) => {
         return ctrl.res.json(data);
       });
   }
   public static async findById(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountFindById = ctrl.arg;
-    return AccountModel.findByIdAsync(arg.accountId)
+    const accountModel = new AccountModel(ctrl.di);
+    return accountModel.findByIdAsync(arg.accountId)
       .then((data) => {
         return ctrl.res.json(data);
       });
   }
   public static async login(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountLogin = ctrl.arg;
-    return AccountModel.loginAsync(arg)
+    const accountModel = new AccountModel(ctrl.di);
+    return accountModel.loginAsync(arg)
       .then((data) => {
         if (arg.cookie === true) {
           const options = {
@@ -38,7 +41,8 @@ export class AccountController {
   }
   public static async register(ctrl: ICtrl): Promise<any> {
     const arg: IArgAccountRegister = ctrl.arg;
-    return AccountModel.createAsync(arg, [Role.USER])
+    const accountModel = new AccountModel(ctrl.di);
+    return accountModel.createAsync(arg, [Role.USER])
       .then((data) => {
         return ctrl.res.json({});
       });
@@ -53,7 +57,8 @@ export class AccountController {
       accessTokenIds.push(ctrl.req.headers.authorization);
     }
     try {
-      await AccessTokenModel.deleteIdsAsync(accessTokenIds);
+      const accessTokenModel = new AccessTokenModel(ctrl.di);
+      await accessTokenModel.deleteIdsAsync(accessTokenIds);
       if (cookieAuthorization) {
         ctrl.res.clearCookie("authorization");
       }
