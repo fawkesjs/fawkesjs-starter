@@ -7,7 +7,7 @@ import { Role } from "../ref";
 const roles = [{ id: Role.ADMIN, name: "admin" }, { id: Role.USER, name: "user" }];
 const orm = new Orm(new Config());
 const di: IDI = {
-  orm: orm,
+  orm,
 };
 modelSyncAsync()
   .then((data) => {
@@ -33,7 +33,7 @@ async function dataInitialize() {
         { id: role.id, name: role.name },
       );
     }
-    let accountModel = new AccountModel(di);
+    const accountModel = new AccountModel(di);
     const adminAccount = await accountModel.createAsync({
         email: "admin@localhost.com",
         name: "admin",

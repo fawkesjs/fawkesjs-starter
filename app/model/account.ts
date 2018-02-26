@@ -2,7 +2,7 @@ import * as bcrypt from "bcrypt-as-promised";
 import { Config, Helper } from "fawkesjs";
 import * as uuidV4 from "uuid/v4";
 import { AccountError, CommonError } from "../error";
-import { 
+import {
   IArgAccountFindById,
   IArgAccountLogin,
   IArgAccountRegister,

@@ -19,7 +19,7 @@ export class AccountOrm {
       },
       id: {
         allowNull: false,
-        defaultValue: function() {
+        defaultValue: () => {
           return uuidV4(); // WARNING: use build in function from database instead for production
         },
         primaryKey: true,

@@ -22,5 +22,5 @@ export interface IAccessTokenCreateResult {
 }
 
 export interface IDI {
-  orm: any
+  orm: any;
 }
