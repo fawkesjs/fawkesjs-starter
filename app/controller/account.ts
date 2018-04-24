@@ -1,6 +1,4 @@
-import * as express from "express";
 import { ICtrl } from "fawkesjs";
-import { AccountError } from "../error";
 import { IArgAccountFindById, IArgAccountLogin, IArgAccountRegister } from "../interface";
 import { AccessTokenModel, AccountModel } from "../model";
 import { Role } from "../ref";

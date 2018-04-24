@@ -1,9 +1,8 @@
-import { IError } from "fawkesjs";
+import { BaseError } from "fawkesjs";
 import { MyErrorCode } from "../const";
 
 export class CommonError {
-  public static resultEmptyError: IError = {
-    errorCode: MyErrorCode.RESULT_EMPTY_ERROR,
-    statusCode: 400,
-  };
+  public static resultEmptyError() {
+    return new BaseError(MyErrorCode.RESULT_EMPTY_ERROR, 401);
+  }
 }

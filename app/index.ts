@@ -20,7 +20,7 @@ app.set("views", path.join(__dirname, "view"));
 app.use(serveStatic(__dirname + "/../public", { maxAge: 0}));
 const di: IDI =  {
   orm: new Orm(new Config({singleton: true}), {singleton: true}),
-}
+};
 Fawkes.activateRoute(app, di);
 const server: http.Server = http.createServer(app);
 server.listen(config.port);

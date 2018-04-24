@@ -40,7 +40,7 @@ export class AccountModel {
           updatedAt: data.updatedAt,
         });
       } else {
-        return Promise.reject(CommonError.resultEmptyError);
+        return Promise.reject(CommonError.resultEmptyError());
       }
     });
   }
@@ -52,14 +52,14 @@ export class AccountModel {
         where: { email: arg.email },
       });
       if (!account) {
-        return Promise.reject(AccountError.emailPasswordError);
+        return Promise.reject(AccountError.emailPasswordError());
       }
       const bcryptCompare = await bcrypt.compare(arg.password, account.password)
         .catch((err) => {
           return false;
         });
       if (bcryptCompare === false) {
-        return Promise.reject(AccountError.emailPasswordError);
+        return Promise.reject(AccountError.emailPasswordError());
       }
       const accessTokenModel = new AccessTokenModel(this.di);
       return accessTokenModel.createAsync(account.id);

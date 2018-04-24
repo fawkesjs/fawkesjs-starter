@@ -1,4 +1,3 @@
-import * as express from "express";
 import { ICtrl } from "fawkesjs";
 import { Template } from "../lib";
 

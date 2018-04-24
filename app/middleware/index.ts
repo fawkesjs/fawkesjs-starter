@@ -1,4 +1,4 @@
-import { Helper, RestMiddleware } from "fawkesjs";
+import { BaseError, Helper, RestMiddleware } from "fawkesjs";
 import * as _ from "underscore";
 import { MyErrorCode } from "../const";
 import { AccessTokenMiddleware } from "../module/accessToken/middleware";
@@ -8,19 +8,24 @@ export let preCtrls = [
   AclMiddleware.verifyAsync,
   RestMiddleware.processArgAsync,
 ];
-/**
- *
- * @param err
- * @param res
- * @param req you can know the language from req
- */
-export let errHandler = (err, res, req) => {
+export let errHandler = (err, res, req, di) => {
+  let theErr: any = {};
   // tslint:disable-next-line no-console
   console.log(err);
-  const theErr = _.clone(err);
-  const statusCode = Helper.objGet(theErr, "statusCode", 500);
-  delete theErr.statusCode;
-  const errorCode = Helper.objGet(theErr, "errorCode", 0);
+  if (err instanceof BaseError) {
+    theErr = {
+      data: err.data,
+      errorCode: err.errorCode,
+    };
+  } else {
+    theErr = {
+      errorCode: typeof err === "object" && typeof err.errorCode === "number" ? err.errorCode : 0,
+    };
+  }
+  const statusCode = typeof err === "object" && typeof err.statusCode === "number" ?
+    err.statusCode : 500;
+  const errorCode = typeof err === "object" && typeof err.errorCode === "number" ?
+    err.errorCode : 500;
   const mapping = {};
   mapping[MyErrorCode.ACL_ERROR] = "Authorization Error";
   mapping[MyErrorCode.REST_PARAM_ERROR] = "Incorrect Parameter";

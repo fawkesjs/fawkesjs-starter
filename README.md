@@ -24,7 +24,6 @@ npm run watch
 
 ## TODO
 - Add default use knexjs for query and sequelize for orm
-- Error should be return as a class instance
 
 ## Testing
 - You can directly call Api with Postman/etc, the server will do data validation according to swagger configuration
