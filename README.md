@@ -1,3 +1,6 @@
+# NOTICE
+This project is no longer under development, a combination of [Koa](http://koajs.com/) with [GraphQL](https://graphql.org/) can achieve a similar functionality.
+
 ## FawkesJs-starter
 > FawkesJs starter consist of access token, acl, swagger, db to use with Fawkesjs.
 > Can be used to setup web front end + API.

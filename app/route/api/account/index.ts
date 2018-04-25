@@ -40,15 +40,15 @@ export const routes: IRoute[] = [{
           address: {
             items: {
               properties: {
-                "address1": {
+                address1: {
                   maxLength: 128,
                   type: "string",
                 },
-                "address2": {
+                address2: {
                   maxLength: 128,
                   type: "string",
                 },
-                "postcode": {
+                postcode: {
                   maxLength: 128,
                   type: "string",
                 },
